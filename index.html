@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet-heat.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/OSMBuildings-Leaflet.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="data/tokyo23kucvs0.js"></script>
+        <script>
+
+
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[35.5340291615,139.537911237],[35.8210485297,139.939125227]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var feature_group = new L.featureGroup([]);
+        var bounds_group = new L.featureGroup([]);
+        var raster_group = new L.LayerGroup([]);
+        var basemap0 = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+
+        basemap0.addTo(map);
+
+        var basemap1 = L.tileLayer('http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png', {
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>,<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash;Map data: &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 18
+        });
+        var basemap2 = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href=https://maps.gsi.go.jp/development/ichiran.html#std">国土地理院</a>',
+            maxZoom: 18
+        });
+
+        function pop_tokyo23kucvs0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">name</th>\
+                        <td>' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">name_en</th>\
+                        <td>' + (feature.properties['name_en'] !== null ? Autolinker.link(String(feature.properties['name_en'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">name_ja</th>\
+                        <td>' + (feature.properties['name_ja'] !== null ? Autolinker.link(String(feature.properties['name_ja'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">atm</th>\
+                        <td>' + (feature.properties['atm'] !== null ? Autolinker.link(String(feature.properties['atm'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">toilet</th>\
+                        <td>' + (feature.properties['toilet'] !== null ? Autolinker.link(String(feature.properties['toilet'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_tokyo23kucvs0(feature) {
+            switch(feature.properties['name_en']) {
+                case '7-Eleven':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(184,51,214,1.0)',
+            }
+                    break;
+                case 'am/pm':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(214,26,98,1.0)',
+            }
+                    break;
+                case 'Circle K sunkus':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(79,205,236,1.0)',
+            }
+                    break;
+                case 'Daily YAMAZAKI':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(56,218,121,1.0)',
+            }
+                    break;
+                case 'Family Mart':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(91,210,187,1.0)',
+            }
+                    break;
+                case 'LAWSON':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(230,213,138,1.0)',
+            }
+                    break;
+                case 'MINISTOP':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(119,60,200,1.0)',
+            }
+                    break;
+                case 'My Basket':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,81,78,1.0)',
+            }
+                    break;
+                case 'NATURAL LAWSON':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(177,222,14,1.0)',
+            }
+                    break;
+                case 'NewDays':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(48,212,48,1.0)',
+            }
+                    break;
+                case 'others':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,128,200,1.0)',
+            }
+                    break;
+                case 'POPLAR':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(209,138,88,1.0)',
+            }
+                    break;
+                case 'Three-F':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(129,221,72,1.0)',
+            }
+                    break;
+                case 'Yamazaki shop':
+                    return {
+                pane: 'pane_tokyo23kucvs0',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(105,153,230,1.0)',
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_tokyo23kucvs0');
+        map.getPane('pane_tokyo23kucvs0').style.zIndex = 600;
+        map.getPane('pane_tokyo23kucvs0').style['mix-blend-mode'] = 'normal';
+        var layer_tokyo23kucvs0 = new L.geoJson(json_tokyo23kucvs0, {
+            pane: 'pane_tokyo23kucvs0',
+            onEachFeature: pop_tokyo23kucvs0,
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, style_tokyo23kucvs0(feature))
+            }
+        });
+
+        L.control.scale().addTo(map);//スケールを挿入
+
+        var title = new L.Control();//タイトルを追加(以下の記述は、QGIS2leafを参考にした)
+    		title.onAdd = function (map) {
+    			this._div = L.DomUtil.create('div', 'info');
+    			this.update();
+    			return this._div;
+    		};
+    		title.update = function () {
+    			this._div.innerHTML = '<h2>タイトル</h2>サブタイトル'
+    		};
+    		title.addTo(map);
+
+        bounds_group.addLayer(layer_tokyo23kucvs0);
+        feature_group.addLayer(layer_tokyo23kucvs0);
+        raster_group.addTo(map);
+        feature_group.addTo(map);
+        var baseMaps = {'OSM': basemap0, 'Stamen Terrain': basemap1,'GSImap':basemap2};
+        L.control.layers(baseMaps,{'tokyo23ku-cvs<br /><table><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_7Eleven0.png" /></td><td>7-Eleven</td></tr><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_ampm1.png" /></td><td>am/pm</td></tr><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_CircleKsunkus2.png" /></td><td>Circle K sunkus</td></tr><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_DailyYAMAZAKI3.png" /></td><td>Daily YAMAZAKI</td></tr><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_FamilyMart4.png" /></td><td>Family Mart</td></tr><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_LAWSON5.png" /></td><td>LAWSON</td></tr><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_MINISTOP6.png" /></td><td>MINISTOP</td></tr><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_MyBasket7.png" /></td><td>My Basket</td></tr><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_NATURALLAWSON8.png" /></td><td>NATURAL LAWSON</td></tr><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_NewDays9.png" /></td><td>NewDays</td></tr><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_others10.png" /></td><td>others</td></tr><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_POPLAR11.png" /></td><td>POPLAR</td></tr><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_ThreeF12.png" /></td><td>Three-F</td></tr><tr><td style="text-align: center;"><img src="legend/tokyo23kucvs0_Yamazakishop13.png" /></td><td>Yamazaki shop</td></tr></table>': layer_tokyo23kucvs0,},{collapsed:false}).addTo(map);
+        setBounds();
+
+
+
+        </script>
+    </body>
+</html>
